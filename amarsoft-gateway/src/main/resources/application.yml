@@ -1,0 +1,32 @@
+server:
+  port: 9001
+spring:
+  profiles:
+    active: uat
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.20.10.11:8849
+    gateway:
+      routes:
+        - id: test_router
+          uri: https://www.baidu.com
+          predicates:
+            - Query=url, baidu
+        - id: product_router
+          uri: lb://amarsoft-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: admin_router
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+
+  application:
+    name: amarsoft-gateway
+

@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 172.20.10.11:8849
+        namespace: c4c1e9ac-d714-4a3b-a59f-a4b4c0d23ba9
